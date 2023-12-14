@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Henlo</title>
+  </head>
+  <body>
+    <h1>Data hehe</h1>
+    <p>
+      latitude: <span id="latitude"></span>&deg;<br />
+      longitude: <span id="longitude"></span>&deg;
+    </p>
+    <label for="vegetable">enter your favorite vegetable</label>
+    <input id="vegetable" value="arugula" />
+    <button id="submit">submit</button>
+    <script>
+
+let lat,lon;
+const button = document.getElementById("submit");
+button.addEventListener("click",async (event)=>{
+  const vegetable = document.getElementById('vegetable').value;
+  const data = { lat, lon , vegetable};
+  const options = {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+      "Content-Type": "application/json"}
+          };
+          //fetch returns a promise
+          const response = await fetch("/api", options);
+          const jsonData = await response.json();
+          console.log(jsonData);
+})
+
+
+
+      if ("geolocation" in navigator) {
+        console.log("geolocation available");
+        navigator.geolocation.getCurrentPosition(async (position) => {
+           lat = position.coords.latitude;
+           lon = position.coords.longitude;
+          document.getElementById("latitude").textContent = lat;
+          document.getElementById("longitude").textContent = lon;
+          //console.log(position);
+
+          });
+
+          //or
+
+         
+        
+      } else {
+        console.log("geolocation not available");
+      }
+    </script>
+  </body>
+</html>
